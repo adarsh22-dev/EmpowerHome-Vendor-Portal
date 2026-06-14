@@ -1599,8 +1599,5 @@ async function startServer() {
   }
 }
 
+await startServer();
 export default app;
-
-startServer().catch((err) => {
-  console.error("Failed to start server:", err);
-});
