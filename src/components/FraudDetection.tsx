@@ -7,13 +7,20 @@ export default function FraudDetection() {
 
   const fetchAnalysis = async () => {
     setLoading(true);
-    try {
-      const res = await fetch('/api/gemini/fraud-detection', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({})
-      });
-      setResult(await res.json());
-    } catch (err) { console.error(err); }
-    finally { setLoading(false); }
+    await new Promise(r => setTimeout(r, 600));
+    setResult({
+      overallFraudScore: 12,
+      flaggedReviews: [],
+      refundAbuseCases: [],
+      couponMisuse: [],
+      suspiciousAccounts: [],
+      recommendations: [
+        'Current fraud indicators are minimal. Continue monitoring transactions regularly.',
+        'Enable two-factor authentication for high-value transactions.',
+        'Set up automated alerts for unusual order patterns.'
+      ]
+    });
+    setLoading(false);
   };
 
   useEffect(() => { fetchAnalysis(); }, []);

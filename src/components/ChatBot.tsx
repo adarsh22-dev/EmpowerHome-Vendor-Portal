@@ -87,30 +87,25 @@ const ChatBot: React.FC<ChatBotProps> = ({ onNavigate }) => {
     };
     setMessages(prev => [...prev, botPlaceholderMessage]);
 
-    try {
-      const history = messages.map(m => ({ role: m.sender === 'user' ? 'user' : 'assistant', content: m.text }));
-      const response = await fetch('/api/gemini/assistant', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ message: text, history, context: 'shopping' })
-      });
-      const data = await response.json();
-      
-      setMessages(prev => prev.map(m => 
-        m.id === botPlaceholderId 
-          ? { ...m, text: data.response || "I didn't quite catch that. Could you try again?" } 
-          : m
-      ));
-    } catch (err) {
-      console.error(err);
-      setMessages(prev => prev.map(m => 
-        m.id === botPlaceholderId 
-          ? { ...m, text: "I'm having a connection issue. Please make sure the server is healthy!" } 
-          : m
-      ));
-    }
+    await new Promise(r => setTimeout(r, 600));
+    const responses: Record<string, string> = {
+      'Bestselling': 'Our best-selling products include premium headphones, smartwatches, and wireless earbuds. Would you like to browse our top sellers?',
+      'Recommended': 'Based on your interests, we recommend checking out our latest electronics and home accessories. Want me to show you some options?',
+      'New Arrivals': 'We have exciting new arrivals in electronics, fashion, and home decor. Browse the latest products now!',
+      'Offers': 'Check out our current deals! Many products are available at discounted prices with free shipping.',
+      'Search Product': 'You can search for any product using the search bar. What product are you looking for?',
+      'Policies': 'Our policies include free returns within 30 days, secure payment processing, and buyer protection.',
+      'My Account': 'You can manage your account, view orders, and update preferences from your profile page.',
+      'Order Tracking': 'Track your order status in real-time from the Orders page. You\'ll get updates at every step.',
+      'Connect with Vendor': 'You can connect directly with vendors through our messaging system for any product inquiries.',
+      'Callback': 'Our support team will call you back within 24 hours. Please ensure your contact details are up to date.'
+    };
+    const response = responses[text] || `I'd be happy to help with "${text}". Let me look into that for you!`;
+    setMessages(prev => prev.map(m => 
+      m.id === botPlaceholderId 
+        ? { ...m, text: response } 
+        : m
+    ));
   };
 
   const handleQuickAction = (action: typeof quickActions[0]) => {

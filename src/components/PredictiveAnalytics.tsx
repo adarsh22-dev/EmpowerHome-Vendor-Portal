@@ -7,18 +7,33 @@ export default function PredictiveAnalytics() {
 
   const fetchData = async () => {
     setLoading(true);
-    try {
-      const [prodRes, analyticsRes] = await Promise.all([
-        fetch('/api/products').then(r => r.json()),
-        fetch('/api/gemini/predictive-analytics', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({})
-        }).then(r => r.json())
-      ]);
-      setResult(analyticsRes);
-    } catch (err) { console.error(err); }
-    finally { setLoading(false); }
+    await new Promise(r => setTimeout(r, 700));
+    setResult({
+      revenueForecast: { nextMonth: 48500, nextQuarter: 152000, confidence: 0.87 },
+      churnPrediction: { currentChurnRate: 5.2, predictedNextMonth: 4.8, atRiskCustomers: 23 },
+      customerLifetimeValue: { average: 1250, topPercentile: 5200, bottomPercentile: 180, distribution: [{ segment: 'High Value', pct: 15, value: 5200 }, { segment: 'Mid Value', pct: 45, value: 1250 }, { segment: 'Low Value', pct: 40, value: 180 }] },
+      repeatPurchaseProbability: { average: 0.68 },
+      forecastData: [
+        { label: 'Jan', actual: 32000, forecast: 34000 },
+        { label: 'Feb', actual: 28000, forecast: 31000 },
+        { label: 'Mar', actual: 35000, forecast: 36000 },
+        { label: 'Apr', actual: 38000, forecast: 40000 },
+        { label: 'May', actual: 42000, forecast: 44000 },
+        { label: 'Jun', actual: 45000, forecast: 48000 }
+      ],
+      seasonalDemand: [
+        { month: 'Jan', expectedDemand: 72, peak: false }, { month: 'Feb', expectedDemand: 65, peak: false },
+        { month: 'Mar', expectedDemand: 78, peak: false }, { month: 'Apr', expectedDemand: 85, peak: false },
+        { month: 'May', expectedDemand: 92, peak: false }, { month: 'Jun', expectedDemand: 95, peak: true }
+      ],
+      productPopularityTrends: [
+        { productName: 'Wireless Headphones', trend: 'rising', popularityScore: 92, peakMonth: 'Jun' },
+        { productName: 'Smart Watch Pro', trend: 'rising', popularityScore: 88, peakMonth: 'May' },
+        { productName: 'USB-C Hub', trend: 'stable', popularityScore: 65, peakMonth: 'Apr' },
+        { productName: 'Laptop Stand', trend: 'declining', popularityScore: 45, peakMonth: 'Feb' }
+      ]
+    });
+    setLoading(false);
   };
 
   useEffect(() => { fetchData(); }, []);

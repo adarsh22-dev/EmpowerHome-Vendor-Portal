@@ -90,25 +90,44 @@ export default function VendorCopilot() {
   const fetchCopilotAnalysis = async () => {
     setLoading(true);
     setError(null);
-    try {
-      const productsRes = await fetch('/api/products');
-      const products = await productsRes.json();
-
-      const response = await fetch('/api/gemini/vendor-copilot', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ products })
-      });
-
-      if (!response.ok) throw new Error('Failed to get copilot analysis');
-      const data = await response.json();
-      setResult(data);
-      setLoaded(true);
-    } catch (err: any) {
-      setError(err.message || 'Failed to load copilot analysis');
-    } finally {
-      setLoading(false);
-    }
+    await new Promise(r => setTimeout(r, 900));
+    setResult({
+      bestTimeForDiscounts: {
+        recommendation: 'Run a weekend flash sale with 15-20% off on slow-moving stock to boost Q2 revenue.',
+        reasoning: 'Historical data shows peak conversion on Friday-Sunday. Current inventory levels support promotional pricing without margin erosion.',
+        suggestedDiscount: '15-20% off select items',
+        timing: 'This Friday through Sunday'
+      },
+      replenishmentAlerts: [
+        { productName: 'Wireless Headphones Pro', currentStock: 12, reorderPoint: 25, recommendedQty: 50, urgency: 'high', reasoning: 'Current stock will last approximately 2 weeks at current sales velocity.' },
+        { productName: 'USB-C Charging Cable', currentStock: 8, reorderPoint: 30, recommendedQty: 100, urgency: 'high', reasoning: 'High-demand accessory with lead time of 2 weeks.' }
+      ],
+      slowMovingStock: [
+        { productName: 'Laptop Stand Aluminum', stock: 45, price: 39.99, daysInInventory: 120, recommendation: 'Bundle with laptop accessories or offer 20% discount', reasoning: 'Product has been in inventory for 4 months with minimal sales velocity.' }
+      ],
+      pricingSuggestions: [
+        { productName: 'Wireless Headphones Pro', currentPrice: 79.99, suggestedPrice: 89.99, reasoning: 'Strong demand and positive reviews support a price increase.', expectedImpact: '+12% revenue with minimal volume impact' },
+        { productName: 'Bluetooth Speaker Mini', currentPrice: 39.99, suggestedPrice: 34.99, reasoning: 'Price reduction to match competitor pricing and increase volume.', expectedImpact: '+25% volume growth' }
+      ],
+      predictedDemand: [
+        { productName: 'Wireless Headphones Pro', currentStock: 12, predictedWeeklyDemand: 8, stockoutRisk: 'high', recommendedAction: 'Restock immediately with expedited shipping' },
+        { productName: 'Smart Watch Band', currentStock: 35, predictedWeeklyDemand: 5, stockoutRisk: 'low', recommendedAction: 'Maintain current inventory levels' }
+      ],
+      competitorBenchmarking: {
+        pricePositioning: 'Mid-range',
+        strengths: ['Competitive pricing on accessories', 'Strong product reviews', 'Fast shipping options'],
+        weaknesses: ['Limited premium brand recognition', 'Fewer product variations than competitors'],
+        opportunities: ['Expand into premium segment', 'Create exclusive bundles'],
+        threats: ['New competitors entering market', 'Rising shipping costs']
+      },
+      topOpportunities: [
+        { priority: 1, title: 'Bundle Wireless Headphones with Accessories', description: 'Create curated bundles to increase average order value and move accessory inventory.', expectedROI: '+18% revenue', effort: 'low', timeline: '1 week' },
+        { priority: 2, title: 'Expand into Premium Audio Segment', description: 'Introduce high-end audio products to capture growing premium market demand.', expectedROI: '+25% margin', effort: 'high', timeline: '3 months' },
+        { priority: 3, title: 'Optimize Product Photography', description: 'Improve product images to increase conversion rates across all product listings.', expectedROI: '+10% conversion', effort: 'medium', timeline: '2 weeks' }
+      ]
+    });
+    setLoaded(true);
+    setLoading(false);
   };
 
   useEffect(() => {

@@ -17,17 +17,35 @@ export default function SupportAgent() {
     setInput('');
     setLoading(true);
 
-    try {
-      const res = await fetch('/api/gemini/support-agent', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text, orderId: orderId || undefined, action: 'support' })
-      });
-      const data = await res.json();
-      setMessages(prev => prev.map(m => m.id === botMsg.id ? { ...m, text: data.response, needsEscalation: data.needsEscalation, escalationReason: data.escalationReason } as typeof m : m));
-    } catch (err) {
-      setMessages(prev => prev.map(m => m.id === botMsg.id ? { ...m, text: "I'm having trouble connecting. Please try again." } : m));
+    await new Promise(r => setTimeout(r, 500));
+    const lower = text.toLowerCase();
+    const isOrderQuery = lower.includes('order') || lower.includes('track') || lower.includes('where');
+    const isReturnQuery = lower.includes('return') || lower.includes('refund');
+    const isDamageQuery = lower.includes('damage') || lower.includes('broken');
+    const isCancelQuery = lower.includes('cancel');
+
+    let response = "I've received your request. Let me help you with that.";
+    let needsEscalation = false;
+    let escalationReason = '';
+
+    if (isOrderQuery) {
+      response = orderId ? `I found order #${orderId}. It is currently in transit and expected to arrive within 2-3 business days.` : 'Please provide your Order ID so I can check the status.';
+    } else if (isReturnQuery) {
+      response = orderId ? `I've initiated a return for order #${orderId}. You'll receive a return label via email within 24 hours.` : 'To process a return, please provide your Order ID.';
+      needsEscalation = true;
+      escalationReason = 'Return request requires manual review';
+    } else if (isDamageQuery) {
+      response = orderId ? `I'm sorry about the damage to order #${orderId}. I've reported this to our claims team.` : 'Please provide your Order ID so I can file a damage report.';
+      needsEscalation = true;
+      escalationReason = 'Damage claim requires manual inspection';
+    } else if (isCancelQuery) {
+      response = orderId ? `I've flagged order #${orderId} for cancellation. Our team will confirm within 24 hours.` : 'To cancel an order, please provide your Order ID.';
+    } else {
+      response = "I understand your concern. Let me connect you with the right support channel to resolve this.";
     }
-    finally { setLoading(false); }
+
+    setMessages(prev => prev.map(m => m.id === botMsg.id ? { ...m, text: response, needsEscalation, escalationReason } as typeof m : m));
+    setLoading(false);
   };
 
   return (

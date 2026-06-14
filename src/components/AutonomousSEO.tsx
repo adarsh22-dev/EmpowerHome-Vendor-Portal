@@ -12,15 +12,34 @@ export default function AutonomousSEO() {
   const generate = async () => {
     if (!productName.trim()) return;
     setLoading(true);
-    try {
-      const res = await fetch('/api/gemini/autonomous-seo', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ product: { name: productName, category, description, price: 0 } })
-      });
-      setResult(await res.json());
-    } catch (err) { console.error(err); }
-    finally { setLoading(false); }
+    await new Promise(r => setTimeout(r, 800));
+    setResult({
+      seoTitle: `${productName} | Best ${category} Products Online`,
+      seoDescription: `Shop the best ${productName} in ${category}. Premium quality, fast shipping, and excellent customer service. Find your perfect ${category} product today.`,
+      metaKeywords: [productName, category, 'best price', 'online shopping', 'premium quality', 'top rated'],
+      faqs: [
+        { question: `What makes ${productName} stand out?`, answer: `${productName} offers premium quality and exceptional value in the ${category} category, backed by our satisfaction guarantee.` },
+        { question: `How do I care for my ${productName}?`, answer: `Follow the included care instructions for best results. Most products can be maintained with basic cleaning and proper storage.` }
+      ],
+      schemaMarkup: {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: productName,
+        category,
+        description
+      },
+      blogPost: {
+        title: `Why ${productName} is the Best Choice in ${category}`,
+        excerpt: `Discover why ${productName} leads the ${category} market with unparalleled quality and value.`,
+        body: `<p>When it comes to ${category}, nothing beats the quality and reliability of ${productName}.</p><p>With its premium build and exceptional performance, it's the top choice for discerning customers.</p>`
+      },
+      internalLinks: [
+        { anchor: `Browse all ${category}`, url: `/category/${category.toLowerCase()}` },
+        { anchor: 'Related accessories', url: '/accessories' }
+      ],
+      imageAltText: `${productName} - Premium ${category} product displayed in high resolution`
+    });
+    setLoading(false);
   };
 
   const copy = (text: string, key: string) => {

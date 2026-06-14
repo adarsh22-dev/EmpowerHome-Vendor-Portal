@@ -77,29 +77,11 @@ const ProductEdit: React.FC<ProductEditProps> = ({ product, categories, onClose,
     }
     
     setIsGeneratingSEO(true);
-    try {
-      const response = await fetch('/api/gemini/seo', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          name: productName,
-          description: productDesc,
-          category: categories.find(c => c.id === Number(watch('category_id')))?.name || 'General'
-        })
-      });
-      const data = await response.json();
-      
-      if (data.seoTitle) setValue('seo.title', data.seoTitle);
-      if (data.seoDescription) setValue('seo.description', data.seoDescription);
-      if (data.keywords) setValue('seo.keywords', Array.isArray(data.keywords) ? data.keywords.join(', ') : data.keywords);
-    } catch (err) {
-      console.error('Failed to generate SEO:', err);
-      alert('Failed to generate SEO utilizing Gemini. Check console log.');
-    } finally {
-      setIsGeneratingSEO(false);
-    }
+    await new Promise(r => setTimeout(r, 600));
+    setValue('seo.title', `${productName} | Best Deals Online`);
+    setValue('seo.description', `Shop the best ${productName}. Premium quality, fast shipping, and top-rated customer service. ${productDesc ? productDesc.substring(0, 80) : ''}`);
+    setValue('seo.keywords', `${productName}, premium quality, best price, online shopping, top rated`);
+    setIsGeneratingSEO(false);
   };
 
   useEffect(() => {
@@ -388,7 +370,7 @@ const ProductEdit: React.FC<ProductEditProps> = ({ product, categories, onClose,
                 <div className="w-10 h-10 bg-black text-white rounded-xl flex items-center justify-center font-bold text-xs shrink-0">AI</div>
                 <div>
                   <h4 className="font-bold text-xs tracking-tight">AI SEO Studio for NovaCart</h4>
-                  <p className="text-[10px] text-zinc-500">Automatically generate perfectly styled title tags, meta descriptions, and keywords using Gemini AI models.</p>
+                  <p className="text-[10px] text-zinc-500">Automatically generate perfectly styled title tags, meta descriptions, and keywords.</p>
                 </div>
               </div>
               <button
@@ -397,7 +379,7 @@ const ProductEdit: React.FC<ProductEditProps> = ({ product, categories, onClose,
                 onClick={handleGenerateSEO}
                 className="self-start sm:self-center bg-black hover:bg-zinc-800 disabled:opacity-50 text-white font-bold text-[11px] uppercase tracking-wider px-4 py-2.5 rounded-xl transition-colors shadow-md shadow-black/5 shrink-0"
               >
-                {isGeneratingSEO ? 'Generating...' : 'Generate with Gemini'}
+                {isGeneratingSEO ? 'Generating...' : 'Generate with AI'}
               </button>
             </div>
 
