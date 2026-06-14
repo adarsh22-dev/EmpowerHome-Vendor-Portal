@@ -2,7 +2,6 @@ import express from "express";
 import { createServer as createViteServer } from "vite";
 import path from "path";
 import { fileURLToPath } from "url";
-import Database from "better-sqlite3";
 import { GoogleGenAI } from "@google/genai";
 
 const ai = process.env.GEMINI_API_KEY 
@@ -26,7 +25,13 @@ app.use(express.json());
 const mockData = {
   categories: [
     { id: 1, name: "Electronics", slug: "electronics", image: "https://picsum.photos/seed/elec/400/400" },
-    { id: 2, name: "Fashion", slug: "fashion", image: "https://picsum.photos/seed/fashion/400/400" }
+    { id: 2, name: "Fashion", slug: "fashion", image: "https://picsum.photos/seed/fashion/400/400" },
+    { id: 3, name: "Home & Garden", slug: "home", image: "https://picsum.photos/seed/home/400/400" },
+    { id: 4, name: "Grocery & Gourmet", slug: "grocery", image: "https://picsum.photos/seed/grocery/400/400" },
+    { id: 5, name: "Beauty & Personal Care", slug: "beauty", image: "https://picsum.photos/seed/beauty/400/400" },
+    { id: 6, name: "Sports & Outdoors", slug: "sports", image: "https://picsum.photos/seed/sports/400/400" },
+    { id: 7, name: "Kids & Toys", slug: "kids", image: "https://picsum.photos/seed/kids/400/400" },
+    { id: 8, name: "Automotive", slug: "automotive", image: "https://picsum.photos/seed/auto/400/400" }
   ],
   products: [
     { id: 1, name: "Pro Wireless Headphones", price: 299.99, image: "https://picsum.photos/seed/hp/600/600", category_id: 1, stock: 50, is_featured: 1 },
@@ -72,6 +77,7 @@ if (isDemoMode) {
     transaction: (cb: any) => cb
   };
 } else {
+  const { default: Database } = await import("better-sqlite3");
   const dbPath = path.join(__dirname, "nexus.db");
   db = new Database(dbPath);
   db.pragma("journal_mode = WAL");
