@@ -1,0 +1,139 @@
+.create-promotion-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.promotion-card {
+  background: white;
+  border-radius: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 32px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.promotion-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  display: flex;
+  items-center: center;
+  gap: 12px;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(0, 0, 0, 0.4);
+  margin-bottom: 8px;
+}
+
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  background: rgba(0, 0, 0, 0.08);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.type-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.type-option {
+  border: 2px solid rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.type-option.active {
+  border-color: black;
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.type-option h4 {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.type-option p {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.discount-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.btn-generate {
+  background: black;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.btn-generate:hover {
+  background: #333;
+}
+
+.date-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 40px;
+  padding-bottom: 40px;
+}
+
+.btn-cancel {
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.btn-save {
+  padding: 12px 32px;
+  background: black;
+  color: white;
+  border-radius: 12px;
+  font-weight: 700;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.btn-save:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}

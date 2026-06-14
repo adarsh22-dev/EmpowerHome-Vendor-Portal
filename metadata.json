@@ -1,0 +1,10 @@
+{
+  "name": "NovaCart AI",
+  "description": "An AI-powered commerce operating system for vendors, creators, and customers.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
