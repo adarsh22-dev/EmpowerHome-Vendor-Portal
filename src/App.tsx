@@ -320,7 +320,7 @@ const ProductCard: React.FC<{ product: Product, onNavigate: (v: string, id?: num
             e.stopPropagation();
             onAddToCart(product);
           }}
-          className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 bg-white text-black p-2 sm:p-3 rounded-full shadow-lg opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 hover:bg-black hover:text-white"
+          className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 bg-white text-black p-2 sm:p-3 rounded-full shadow-lg sm:opacity-0 sm:translate-y-4 sm:group-hover:opacity-100 sm:group-hover:translate-y-0 transition-all duration-300 hover:bg-black hover:text-white"
         >
           <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
         </button>
@@ -741,13 +741,13 @@ const HomePage = ({ onNavigate, products, categories, onAddToCart, wishlist, onT
           {/* Slider Controls */}
           <button 
             onClick={prevSlide}
-            className="absolute left-4 top-1/2 -translate-y-1/2 p-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white/20"
+            className="absolute left-4 top-1/2 -translate-y-1/2 p-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white md:opacity-0 md:group-hover:opacity-100 transition-opacity hover:bg-white/20"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
           <button 
             onClick={nextSlide}
-            className="absolute right-4 top-1/2 -translate-y-1/2 p-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white/20"
+            className="absolute right-4 top-1/2 -translate-y-1/2 p-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white md:opacity-0 md:group-hover:opacity-100 transition-opacity hover:bg-white/20"
           >
             <ChevronRight className="w-6 h-6" />
           </button>
@@ -873,8 +873,8 @@ const HomePage = ({ onNavigate, products, categories, onAddToCart, wishlist, onT
       />
 
       {/* Deal of the Day */}
-      <section className="max-w-7xl mx-auto px-6">
-        <div className="bg-zinc-900 rounded-[40px] p-12 md:p-20 text-white relative overflow-hidden">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="bg-zinc-900 rounded-2xl sm:rounded-[40px] p-6 sm:p-12 md:p-20 text-white relative overflow-hidden">
           <div className="absolute top-0 right-0 w-1/2 h-full opacity-20 pointer-events-none">
             <div className="absolute inset-0 bg-gradient-to-l from-zinc-900 to-transparent z-10" />
             <img src="https://picsum.photos/seed/deal/800/800" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
@@ -885,16 +885,16 @@ const HomePage = ({ onNavigate, products, categories, onAddToCart, wishlist, onT
             </div>
             <h2 className="text-5xl md:text-7xl font-bold tracking-tighter leading-none">FLASH SALE<br />IS LIVE.</h2>
             <p className="text-white/60 text-lg">Get up to 60% off on selected premium electronics. Limited time only.</p>
-            <div className="flex items-center gap-8">
-              <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8">
+              <div className="flex gap-3 sm:gap-4">
                 {['08', '12', '45'].map((num, i) => (
                   <div key={i} className="text-center">
-                    <div className="text-3xl font-bold bg-white/10 backdrop-blur-md border border-white/20 w-16 h-16 rounded-2xl flex items-center justify-center mb-2">{num}</div>
+                    <div className="text-2xl sm:text-3xl font-bold bg-white/10 backdrop-blur-md border border-white/20 w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mb-2">{num}</div>
                     <div className="text-[10px] font-bold uppercase tracking-widest text-white/40">{['Hrs', 'Min', 'Sec'][i]}</div>
                   </div>
                 ))}
               </div>
-              <button onClick={() => onNavigate('products')} className="bg-white text-black px-10 py-4 rounded-full font-bold hover:bg-zinc-200 transition-colors">Shop the Sale</button>
+              <button onClick={() => onNavigate('products')} className="bg-white text-black px-8 sm:px-10 py-3 sm:py-4 rounded-full font-bold hover:bg-zinc-200 transition-colors text-sm sm:text-base whitespace-nowrap">Shop the Sale</button>
             </div>
           </div>
         </div>
@@ -927,10 +927,10 @@ const HomePage = ({ onNavigate, products, categories, onAddToCart, wishlist, onT
       />
 
       {/* Wholesale Banner */}
-      <section className="px-6">
-        <div className="max-w-7xl mx-auto bg-black text-white rounded-3xl p-16 flex flex-col md:flex-row items-center justify-between gap-12">
+      <section className="px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto bg-black text-white rounded-3xl p-6 sm:p-12 md:p-16 flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-12">
           <div className="max-w-xl">
-            <h2 className="text-5xl font-bold tracking-tighter mb-6">Scale Your Business with Nexus Wholesale.</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tighter mb-6">Scale Your Business with Nexus Wholesale.</h2>
             <p className="text-white/60 text-lg mb-8">Access tiered pricing, dedicated account managers, and bulk logistics. Join 50,000+ businesses sourcing from Nexus.</p>
             <div className="flex gap-4">
               <button onClick={() => onNavigate('auth')} className="bg-white text-black px-8 py-4 rounded-full font-bold hover:bg-zinc-200 transition-colors">Apply for Wholesale</button>
@@ -960,10 +960,10 @@ const HomePage = ({ onNavigate, products, categories, onAddToCart, wishlist, onT
 
       {/* Latest Insights Section */}
       {blogs.length > 0 && (
-        <section className="max-w-7xl mx-auto px-6">
-          <div className="flex items-end justify-between mb-12">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="flex items-end justify-between mb-8 sm:mb-12">
             <div>
-              <h2 className="text-4xl font-bold tracking-tight">Latest Insights</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Latest Insights</h2>
               <p className="text-black/50">Trends, tips, and news from the Nexus community</p>
             </div>
             <button onClick={() => onNavigate('blog')} className="text-sm font-bold underline underline-offset-4">Read All Posts</button>
